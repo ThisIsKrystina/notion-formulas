@@ -1,0 +1,20 @@
+// Generates the Status//
+if(prop("Status ID") == 1, "🔥 Overdue", if(prop("Status ID") == 2, "🔄 Reschedule", if(prop("Status ID") == 3, "🚨 Needs Date" + if(empty(prop("Project Priority")), " or Dependency", ""), if(prop("Status ID") == 4, "🗓️ Scheduled", if(prop("Status ID") == 5, "🕒 Awaiting Dependency", if(prop("Status ID") == 6, "💤 Someday", if(prop("Status ID") == 7, "✅ Complete", ""))))))) + if(and(prop("Status ID") != 5, and(prop("Dependency Status") != "2", toNumber(prop("Dependency Status")) < 7)), "\n— Awaiting Dependency", "")
+
+
+//Generates the status number based on various factors//
+if(contains(prop("Complete"), "Done"), 7, if(or(and(not empty(prop("Non-Functional")), contains(prop("Complete"), "Done")), and(contains(prop("Complete"), "In progress"), or(now() > dateAdd(end(prop("Do Date")), 1, "days"), end(prop("Deadline")) < end(prop("Do Date"))))), 2, if(or(now() > dateAdd(end(prop("Do Date")), 1, "days"), now() > dateAdd(end(prop("Deadline")), 1, "days")), 1, if(and(and(and(empty(end(prop("Do Date"))), empty(end(prop("Deadline")))), prop("Urgency") != "someday_"), or(empty(prop("Blocked by")), toNumber(prop("Dependency Status")) == 7)), 3, if(or(or(not empty(end(prop("Do Date"))), not empty(end(prop("Deadline")))), and(now() > start(prop("Do Date")), now() < end(prop("Do Date")))), 4, if(or(and(prop("Complete") == "Waiting", and(empty(prop("Do Date")), empty(prop("Deadline")))), and(and(not empty(prop("Blocked by")), toNumber(prop("Dependency Status")) < 6), prop("Urgency") != "someday_")), 5, if(or(prop("Urgency") == "someday_", toNumber(prop("Dependency Status")) == 6), 6, 0)))))))
+
+//Status Definitions//
+
+
+7	Healthy	✅ Complete
+6	Healthy	💤 Someday
+5	Healthy	🕒 Awaiting Dependency
+	Healthy	🔜 On Deck
+4	Healthy	🗓️ Scheduled
+3	Unhealthy	🚨 Needs Date (or Dependency)
+2	Unhealthy	🔄 Reschedule
+1	Unhealthy	🔥 Overdue 
+
+
