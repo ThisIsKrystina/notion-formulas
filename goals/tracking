@@ -1,0 +1,2 @@
+if(prop(Domain) == "Executing", "You know how to “catch” an idea and make it a reality.", if(prop(Domain) == "Relationship Building", "You build strong relationships that hold a team together and make it greater than the sum of its parts.", if(prop(Domain) == "Influencing", "You take charge, speak up and make sure others are heard.", "You absorb and analyze information that informs better decisions.")))
+
