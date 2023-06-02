@@ -1,2 +1,18 @@
 if(prop(Domain) == "Executing", "You know how to “catch” an idea and make it a reality.", if(prop(Domain) == "Relationship Building", "You build strong relationships that hold a team together and make it greater than the sum of its parts.", if(prop(Domain) == "Influencing", "You take charge, speak up and make sure others are heard.", "You absorb and analyze information that informs better decisions.")))
 
+//Calculating business days between now and deadline//
+
+round(dateBetween(end(prop("Timeframe")), now(), "days") + 1 + day(now()) - day(end(prop("Timeframe"))) - (dateBetween(end(prop("Timeframe")), now(), "days") + 1 + day(now()) - day(end(prop("Timeframe")))) / 7 * 2 - if(day(now()) == 0, 1, day(now())) + if(day(end(prop("Timeframe"))) == 6, 5, day(end(prop("Timeframe")))))
+
+//Calculating business days between start and end date//
+
+round(dateBetween(end(prop("Date")), start(prop("Date")), "days") + 1 + day(start(prop("Date"))) - day(end(prop("Date"))) - (dateBetween(end(prop("Date")), start(prop("Date")), "days") + 1 + day(start(prop("Date"))) - day(end(prop("Date")))) / 7 * 2 - if(day(start(prop("Date"))) == 0, 1, day(start(prop("Date")))) + if(day(end(prop("Date"))) == 6, 5, day(end(prop("Date")))))
+
+//*Showing business days remaining as a fraction, to display as a progress bar |WIP *//
+
+Fraction format(dateBetween(end(prop("Dates")), start(prop("Dates")), "days") - dateBetween(end(prop("Dates")), now(), "days")) + "/" + format(dateBetween(end(prop("Dates")), start(prop("Dates")), "days"))
+
+
+//*Showing a message along with working days remaining | WIP *//
+
+concat(round(dateBetween(end(prop("Timeframe")), now(), "days") + 1 + day(now()) - day(end(prop("Timeframe"))) - (dateBetween(end(prop("Timeframe")), now(), "days") + 1 + day(now()) - day(end(prop("Timeframe")))) / 7 * 2 - if(day(now()) == 0, 1, day(now())) + if(day(end(prop("Timeframe"))) == 6, 5, day(end(prop("Timeframe"))))) + " working days")
